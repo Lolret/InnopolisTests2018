@@ -1,24 +1,25 @@
 package lesson3.collections.inClass;
 
+import lesson3.collections.home.ObjectBox;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
-public class MathBox {
+public class MathBox<T extends Number> extends ObjectBox {
 
-    private TreeSet<Integer> sortedSet;
+    private TreeSet<T> sortedSet;
 
     public MathBox() {
     }
 
-    public MathBox(Integer[] array)  {
+    public MathBox(T[] array)  {
         initCollection(array);
     }
 
-    public void initCollection(Integer[] array) {
-        TreeSet<Integer> set = new TreeSet<>(Arrays.asList(array));
+    public void initCollection(T[] array) {
+        TreeSet<T> set = new TreeSet<>(Arrays.asList(array));
         if (set.size() < array.length) try {
             throw new ArrayValuesNotUnique("values of array is not unique");
         } catch (ArrayValuesNotUnique arrayValuesNotUnique) {
@@ -27,23 +28,37 @@ public class MathBox {
         else this.sortedSet = set;
     }
 
-    public Integer summator() {
-        return sortedSet.stream().mapToInt(x -> x).sum();
+    public Double summator() {
+        // return sortedSet.stream().mapToDouble(x -> (double) x).sum();
+        Double sum = 0d;
+        for (T val : sortedSet) {
+            sum += val.doubleValue();
+        }
+        return sum;
     }
 
-    public Set<Integer> splitter(Integer div) {
-        return sortedSet.stream().map(x -> x / div).collect(Collectors.toSet());
+    public Set<T> splitter(T div) {
+        TreeSet<T> set = new TreeSet<>();
+        for (T val: sortedSet) {
+            Double val2 =  (val.doubleValue() / div.doubleValue());
+            set.add((T) val2);
+        }
+        return set;
+        // My lovely stream not withstand
+        // the ticket "Класс MathBox необходимо доработать так, чтобы он работал не только с Integer,
+        // но и с любым Number"
+        // return sortedSet.stream().map(x -> (x / div).collect(Collectors.toSet());
     }
 
-    public boolean delete( Integer val) {
+    public boolean delete(T val) {
         return sortedSet.remove(val);
     }
 
-    public TreeSet<Integer> getSortedSet() {
+    public TreeSet<T> getSortedSet() {
         return sortedSet;
     }
 
-    public void setSortedSet(TreeSet<Integer> sortedSet) {
+    public void setSortedSet(TreeSet<T> sortedSet) {
         this.sortedSet = sortedSet;
     }
 
@@ -64,7 +79,6 @@ public class MathBox {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(sortedSet);
     }
 }
