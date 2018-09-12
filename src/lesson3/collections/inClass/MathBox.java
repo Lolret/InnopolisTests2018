@@ -50,6 +50,10 @@ public class MathBox<T extends Number> extends ObjectBox {
         return sortedSet.remove(val);
     }
 
+    public boolean add(T val) {
+        return sortedSet.add(val);
+    }
+
     public Set<T> getSortedSet() {
         return sortedSet;
     }
