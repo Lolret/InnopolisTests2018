@@ -1,4 +1,4 @@
-package lesson3.collections.inClass;
+package lesson3.collections.home;
 
 public class ArrayValuesNotUnique extends Exception {
 

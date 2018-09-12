@@ -1,6 +1,4 @@
-package lesson3.collections.inClass;
-
-import lesson3.collections.home.ObjectBox;
+package lesson3.collections.home;
 
 import java.util.Arrays;
 import java.util.Objects;
