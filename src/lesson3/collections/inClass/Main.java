@@ -12,6 +12,5 @@ public class Main {
         mb.delete(8);
         System.out.println(mb.getSortedSet());
         System.out.println("Summ = " +mb.summator());
-
     }
 }

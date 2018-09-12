@@ -6,6 +6,6 @@ public class ArrayValuesNotUnique extends Exception {
     }
 
     ArrayValuesNotUnique(String msg) {
-        super(msg);
+        super("values of array is not unique");
     }
 }

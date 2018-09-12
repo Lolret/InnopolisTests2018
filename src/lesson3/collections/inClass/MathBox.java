@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 public class MathBox<T extends Number> extends ObjectBox {
 
-    private TreeSet<T> sortedSet;
+    private Set<T> sortedSet;
 
     public MathBox() {
     }
@@ -19,9 +19,9 @@ public class MathBox<T extends Number> extends ObjectBox {
     }
 
     public void initCollection(T[] array) {
-        TreeSet<T> set = new TreeSet<>(Arrays.asList(array));
+        Set<T> set = new TreeSet<>(Arrays.asList(array));
         if (set.size() < array.length) try {
-            throw new ArrayValuesNotUnique("values of array is not unique");
+            throw new ArrayValuesNotUnique();
         } catch (ArrayValuesNotUnique arrayValuesNotUnique) {
             arrayValuesNotUnique.printStackTrace();
         }
@@ -44,17 +44,13 @@ public class MathBox<T extends Number> extends ObjectBox {
             set.add((T) val2);
         }
         return set;
-        // My lovely stream not withstand
-        // the ticket "Класс MathBox необходимо доработать так, чтобы он работал не только с Integer,
-        // но и с любым Number"
-        // return sortedSet.stream().map(x -> (x / div).collect(Collectors.toSet());
     }
 
     public boolean delete(T val) {
         return sortedSet.remove(val);
     }
 
-    public TreeSet<T> getSortedSet() {
+    public Set<T> getSortedSet() {
         return sortedSet;
     }
 

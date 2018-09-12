@@ -1,30 +1,32 @@
 package lesson3.collections.home;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 public class ObjectBox {
 
-    TreeSet<Object> sortedSet;
+    private List<Object> list;
 
     public ObjectBox() {
-        sortedSet = new TreeSet<>();
+        list = new ArrayList<>();
     }
 
-    public ObjectBox(TreeSet<Object> sortedSet) {
-        this.sortedSet = sortedSet;
+    public ObjectBox(List<Object> list) {
+        this.list = list;
     }
 
     protected void addObject(Object obj) {
-        sortedSet.add(obj);
+        list.add(obj);
     }
 
     protected boolean deleteObject(Object obj) {
-        return sortedSet.remove(obj);
+        return list.remove(obj);
     }
 
     public String dump() {
         StringBuffer sb = new StringBuffer();
-        sortedSet.forEach(sb::append);
+        list.forEach(sb::append);
         return sb.toString();
     }
 }
