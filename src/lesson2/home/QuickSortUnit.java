@@ -1,11 +1,11 @@
-package Lesson2;
+package lesson2.home;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class QuickSortUnit {
 
-    private static void printArray(Integer[] array) {
+    static void printArray(Integer[] array) {
         Arrays.stream(array).forEach(i -> {
             if (i < 10) System.out.print(i + "  ");
             else System.out.print(i + " ");
@@ -13,7 +13,7 @@ public class QuickSortUnit {
         System.out.println();
     }
 
-    private static void quickSort(Integer[] array) {
+    static void quickSort(Integer[] array) {
         int startIndex = 0;
         int endIndex = array.length - 1;
         doSort(startIndex, endIndex, array);
@@ -45,16 +45,4 @@ public class QuickSortUnit {
         doSort(cur + 1, end, array);
     }
 
-    public static void main(String[] args) {
-
-        Integer ARRAY_LENGTH = 20;
-        Integer[] array = new Integer[ARRAY_LENGTH];
-
-        Random random = new Random();
-        for (int i = 0; i < ARRAY_LENGTH; i++) array[i] = random.nextInt(100);
-
-        printArray(array);
-        quickSort(array);
-        printArray(array);
-    }
 }
