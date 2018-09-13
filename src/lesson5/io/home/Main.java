@@ -14,7 +14,7 @@ public class Main {
     static int SENTENCE_COUNT = 1_000;
     static int SENTENCE_PARAGRAPH_COUNT = 20;
     static int WORD_ARRAY_LENGHT = 1_000;
-    static int PROBABILITY = 1;
+    static int PROBABILITY = 6;
 
     static String PATH_TO_RAVE = "d://";
     static int FILE_COUNT = 3;
