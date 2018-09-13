@@ -11,19 +11,16 @@ public class Main {
 
     static int WORD_MAX_LENGHT = 15;
     static int SENTENCE_MAX_LENGHT = 15;
-    static int SENTENCE_COUNT = 20;
-    static int PARAGRAPH_COUNT = 20;
+    static int SENTENCE_COUNT = 1_000;
+    static int SENTENCE_PARAGRAPH_COUNT = 20;
     static int WORD_ARRAY_LENGHT = 1_000;
-    static int PROBABILITY = 1_000;
+    static int PROBABILITY = 1;
 
     static String PATH_TO_RAVE = "d://";
-    static int FILE_COUNT = 5;
-
+    static int FILE_COUNT = 3;
 
     public static void main(String[] args) {
-
-    raveGenerator(PATH_TO_RAVE, FILE_COUNT);
-
+        raveGenerator(PATH_TO_RAVE, FILE_COUNT);
     }
 
     public static void raveGenerator(String path,
@@ -50,9 +47,9 @@ public class Main {
     static void populateFile(String filePathName) {
 
         try {
-            Files.write(Paths.get(filePathName),generateText(SENTENCE_COUNT, PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
-                                        generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT),
-                                        PROBABILITY, WORD_MAX_LENGHT).getBytes());
+            Files.write(Paths.get(filePathName), generateText(SENTENCE_COUNT, SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
+                    generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT),
+                    PROBABILITY, WORD_MAX_LENGHT).getBytes());
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -108,16 +105,23 @@ public class Main {
         return stringBuffer.toString();
     }
 
-    static String generateText(int sentanceCount, int paragraphCount, int sentanceLenght, String[] words, int probability, int wordLenght) {
+    static String generateText(int sentanceCount, int sentanceParagpaphCount, int sentanceLenght, String[] words,
+                               int probability, int wordLenght) {
         Random random = new Random();
         StringBuffer stringBuffer = new StringBuffer();
-        for (int i = 0; i < random.nextInt(paragraphCount); i++) {
-            if (sentanceCount > 0)
-            for (int j = 0; j < random.nextInt(sentanceCount); j++) {
-                stringBuffer.append(generateSentance(sentanceLenght, words, probability, wordLenght));
+        int temporarySentanceParagpaphCount = sentanceParagpaphCount;
+        do {
+            stringBuffer.append(generateSentance(sentanceLenght, words, probability, wordLenght));
+            sentanceCount--;
+            temporarySentanceParagpaphCount--;
+
+            if (temporarySentanceParagpaphCount == 0) {
+                stringBuffer.append(System.getProperty("line.separator"));
+                temporarySentanceParagpaphCount = sentanceParagpaphCount;
             }
-            stringBuffer.append("\n");
         }
+        while (sentanceCount > 0);
+
         return stringBuffer.toString();
     }
 }
