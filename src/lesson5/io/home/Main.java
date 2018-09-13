@@ -18,13 +18,12 @@ public class Main {
 
     static boolean GAUSSIAN_SENTENCE_COUNT = true;
     static int WORD_ARRAY_LENGHT_min = 500;
-    static int WORD_ARRAY_LENGHT_max = 1_000;
+    static int WORD_ARRAY_LENGHT_max = 1_500;
 
     static String PATH_TO_RAVE = "d://";
     static int FILE_COUNT = 3;
 
     public static void main(String[] args) {
-        Random random = new Random();
 
         raveGenerator(PATH_TO_RAVE, FILE_COUNT, GAUSSIAN_SENTENCE_COUNT);
     }
@@ -54,7 +53,7 @@ public class Main {
 
         try {
             if (gaussianSentanceCount) {
-                Files.write(Paths.get(filePathName), generateText(WORD_ARRAY_LENGHT_min, WORD_ARRAY_LENGHT_min,
+                Files.write(Paths.get(filePathName), generateText(WORD_ARRAY_LENGHT_min, WORD_ARRAY_LENGHT_max,
                         SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
                         generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT),
                         PROBABILITY, WORD_MAX_LENGHT).getBytes());
@@ -74,7 +73,6 @@ public class Main {
         for (int i = 0; i < r.nextInt(wordLenght) + 1; i++) {
             stringBuffer.append((char) (r.nextInt(26) + 'a'));
         }
-
         return stringBuffer.toString();
     }
 
@@ -101,6 +99,7 @@ public class Main {
         }
 
         for (int i = 0; i < random.nextInt(sentanceLenght); i++) {
+            if (random.nextInt(10) == 9) stringBuffer.append(",");
             stringBuffer.append(" ");
             if (random.nextInt(probability) == probability - 1)
                 stringBuffer.append(generateWord(wordLenght));
