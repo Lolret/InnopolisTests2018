@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 public class MathBox<T extends Number> extends ObjectBox {
 
-    private Set<T> sortedSet;
+     private Set<T> sortedSet;
 
     public MathBox() {
     }
