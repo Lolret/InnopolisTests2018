@@ -1,11 +1,12 @@
 package lesson3.collections.home;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class MathBox<T extends Number> extends ObjectBox {
+public class MathBox<T extends Number> extends ObjectBox implements Serializable {
 
     private Set<T> sortedSet;
 
