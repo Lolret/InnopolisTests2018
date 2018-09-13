@@ -14,23 +14,29 @@ public class Main {
     static int SENTENCE_COUNT = 1_000;
     static int SENTENCE_PARAGRAPH_COUNT = 20;
     static int WORD_ARRAY_LENGHT = 1_000;
-    static int PROBABILITY = 6;
+    static int PROBABILITY = 2;
+
+    static boolean GAUSSIAN_SENTENCE_COUNT = true;
+    static int WORD_ARRAY_LENGHT_min = 500;
+    static int WORD_ARRAY_LENGHT_max = 1_000;
 
     static String PATH_TO_RAVE = "d://";
     static int FILE_COUNT = 3;
 
     public static void main(String[] args) {
-        raveGenerator(PATH_TO_RAVE, FILE_COUNT);
+        Random random = new Random();
+
+        raveGenerator(PATH_TO_RAVE, FILE_COUNT, GAUSSIAN_SENTENCE_COUNT);
     }
 
     public static void raveGenerator(String path,
-                                     int n) {
+                                     int n, boolean gaussianSentanceCount) {
         for (int i = 0; i < n; i++) {
-            generateFile(path);
+            generateFile(path, gaussianSentanceCount);
         }
     }
 
-    public static void generateFile(String path) {
+    public static void generateFile(String path, boolean gaussianSentanceCount) {
 
         String filePathName = path + "raveFile_" + UUID.randomUUID().toString() + ".txt";
         Path p = Paths.get(filePathName);
@@ -41,13 +47,19 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        populateFile(filePathName);
+        populateFile(filePathName, gaussianSentanceCount);
     }
 
-    static void populateFile(String filePathName) {
+    static void populateFile(String filePathName, boolean gaussianSentanceCount) {
 
         try {
-            Files.write(Paths.get(filePathName), generateText(SENTENCE_COUNT, SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
+            if (gaussianSentanceCount) {
+                Files.write(Paths.get(filePathName), generateText(WORD_ARRAY_LENGHT_min, WORD_ARRAY_LENGHT_min,
+                        SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
+                        generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT),
+                        PROBABILITY, WORD_MAX_LENGHT).getBytes());
+            } else Files.write(Paths.get(filePathName), generateText(
+                    SENTENCE_COUNT, SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
                     generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT),
                     PROBABILITY, WORD_MAX_LENGHT).getBytes());
         } catch (IOException e1) {
@@ -100,13 +112,17 @@ public class Main {
         else if (rndChar == 1) punctuationMark = '!';
         else punctuationMark = '?';
 
-        stringBuffer.append(punctuationMark + " ");
+        stringBuffer.append(punctuationMark).append(" ");
 
         return stringBuffer.toString();
     }
 
-    static String generateText(int sentanceCount, int sentanceParagpaphCount, int sentanceLenght, String[] words,
-                               int probability, int wordLenght) {
+    static String generateText(int sentanceCount,
+                               int sentanceParagpaphCount,
+                               int sentanceLenght,
+                               String[] words,
+                               int probability,
+                               int wordLenght) {
         Random random = new Random();
         StringBuffer stringBuffer = new StringBuffer();
         int temporarySentanceParagpaphCount = sentanceParagpaphCount;
@@ -114,6 +130,11 @@ public class Main {
             stringBuffer.append(generateSentance(sentanceLenght, words, probability, wordLenght));
             sentanceCount--;
             temporarySentanceParagpaphCount--;
+
+            if (random.nextInt(20) == sentanceParagpaphCount - 1) {
+                stringBuffer.append(System.getProperty("line.separator"));
+                temporarySentanceParagpaphCount = sentanceParagpaphCount;
+            }
 
             if (temporarySentanceParagpaphCount == 0) {
                 stringBuffer.append(System.getProperty("line.separator"));
@@ -123,5 +144,20 @@ public class Main {
         while (sentanceCount > 0);
 
         return stringBuffer.toString();
+    }
+
+    static String generateText(int sentanceCountMin, int sentanceCountMax,
+                               int sentanceParagpaphCount,
+                               int sentanceLenght, String[] words,
+                               int probability,
+                               int wordLenght) {
+        int middleSentanceCount = (sentanceCountMax + sentanceCountMin) / 2;
+        Random random = new Random();
+
+        int sentanceCount = (int) (middleSentanceCount + random.nextGaussian() * middleSentanceCount);
+        if (sentanceCount < middleSentanceCount * 0.5) sentanceCount = sentanceCountMin;
+        if (sentanceCount > middleSentanceCount * 1.5) sentanceCount = sentanceCountMax;
+
+        return generateText(sentanceCount, sentanceParagpaphCount, sentanceLenght, words, probability, wordLenght);
     }
 }
