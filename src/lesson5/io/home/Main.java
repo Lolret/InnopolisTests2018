@@ -3,15 +3,15 @@ package lesson5.io.home;
 public class Main {
 
     public static void main(String[] args) {
-        String PATH_TO_RAVE = "d://";
-        int FILE_COUNT = 3;
-        boolean GAUSSIAN_SENTENCE_COUNT = true;
+        String pathToRave = "d://";
+        int fileCount = 3;
+        boolean gaussianSentenceCount = true;
 
-        int WORD_ARRAY_LENGHT = 1_000;
-        int WORD_MAX_LENGHT = 15;
+        int wordArrayLenght = 1_000;
+        int wordMaxLenght = 15;
 
-        String[] words = RaveGenerator.generateWordsArray(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT);
+        String[] words = RaveGenerator.generateWordsArray(wordArrayLenght, wordMaxLenght);
 
-        RaveGenerator.getFiles(PATH_TO_RAVE, FILE_COUNT, GAUSSIAN_SENTENCE_COUNT, words);
+        RaveGenerator.getFiles(pathToRave, fileCount, gaussianSentenceCount, words);
     }
 }
