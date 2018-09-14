@@ -56,7 +56,7 @@ public class RaveGenerator {
         Random random = new Random();
         StringBuffer stringBuffer = new StringBuffer();
 
-        for (int i = 0; i < random.nextInt(wordLenght +1); i++) {
+        for (int i = 0; i < random.nextInt(wordLenght) + 1; i++) {
             stringBuffer.append((char) (random.nextInt(26) + 'a'));
         }
         return stringBuffer.toString();
@@ -76,7 +76,7 @@ public class RaveGenerator {
 
         String firstWord;
 
-        if (random.nextInt(probability) == probability - 1) firstWord = generateWord(random.nextInt(10));
+        if (random.nextInt(probability) == probability - 1) firstWord = generateWord(random.nextInt(10) + 1);
         else firstWord = words[random.nextInt(words.length)];
 
         stringBuffer.append((char) (firstWord.charAt(0) - 32));
