@@ -11,32 +11,32 @@ public class Main {
 
     static int WORD_MAX_LENGHT = 15;
     static int SENTENCE_MAX_LENGHT = 15;
-    static int SENTENCE_COUNT = 1_000;
     static int SENTENCE_PARAGRAPH_COUNT = 20;
-    static int WORD_ARRAY_LENGHT = 1_000;
     static int PROBABILITY = 2;
-
+    static int WORD_ARRAY_LENGHT = 1_000;
 
     static boolean GAUSSIAN_SENTENCE_COUNT = true;
-    static int WORD_ARRAY_LENGHT_min = 500;
-    static int WORD_ARRAY_LENGHT_max = 1_500;
+    static int Sentence_COUNT_MIN = 500;
+    static int Sentence_COUNT_MAX = 1_500;
 
     static String PATH_TO_RAVE = "d://";
     static int FILE_COUNT = 3;
 
     public static void main(String[] args) {
 
-        raveGenerator(PATH_TO_RAVE, FILE_COUNT, GAUSSIAN_SENTENCE_COUNT);
+        String[] words = generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT);
+
+        raveGenerator(PATH_TO_RAVE, FILE_COUNT, GAUSSIAN_SENTENCE_COUNT, words);
     }
 
     public static void raveGenerator(String path,
-                                     int n, boolean gaussianSentanceCount) {
+                                     int n, boolean gaussianSentenceCount, String[] words) {
         for (int i = 0; i < n; i++) {
-            generateFile(path, gaussianSentanceCount);
+            generateFile(path, gaussianSentenceCount, words);
         }
     }
 
-    public static void generateFile(String path, boolean gaussianSentanceCount) {
+    public static void generateFile(String path, boolean gaussianSentenceCount, String[] words) {
 
         String filePathName = path + "raveFile_" + UUID.randomUUID().toString() + ".txt";
         Path p = Paths.get(filePathName);
@@ -47,27 +47,23 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        populateFile(filePathName, gaussianSentanceCount);
+        populateFile(filePathName, gaussianSentenceCount, words);
     }
 
-    static void populateFile(String filePathName, boolean gaussianSentanceCount) {
+    static void populateFile(String filePathName, boolean gaussianSentenceCount, String[] words) {
 
         try {
-            if (gaussianSentanceCount) {
-                Files.write(Paths.get(filePathName), generateText(WORD_ARRAY_LENGHT_min, WORD_ARRAY_LENGHT_max,
-                        SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
-                        generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT),
-                        PROBABILITY, WORD_MAX_LENGHT).getBytes());
-            } else Files.write(Paths.get(filePathName), generateText(
-                    SENTENCE_COUNT, SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
-                    generateWords(WORD_ARRAY_LENGHT, WORD_MAX_LENGHT),
-                    PROBABILITY, WORD_MAX_LENGHT).getBytes());
+            Files.write(Paths.get(filePathName),
+                    generateText(Sentence_COUNT_MIN, Sentence_COUNT_MAX, gaussianSentenceCount,
+                            SENTENCE_PARAGRAPH_COUNT, SENTENCE_MAX_LENGHT,
+                            words,
+                            PROBABILITY, WORD_MAX_LENGHT).getBytes());
         } catch (IOException e1) {
             e1.printStackTrace();
         }
     }
 
-    static String generateWord(int wordLenght) {
+    private static String generateWord(int wordLenght) {
         Random r = new Random();
         StringBuffer stringBuffer = new StringBuffer();
 
@@ -77,7 +73,7 @@ public class Main {
         return stringBuffer.toString();
     }
 
-    static String[] generateWords(int wordArrayLenght, int wordLenght) {
+    private static String[] generateWords(int wordArrayLenght, int wordLenght) {
         String[] strings = new String[wordArrayLenght];
         for (int i = 0; i < wordArrayLenght; i++) {
             strings[i] = generateWord(wordLenght);
@@ -85,7 +81,7 @@ public class Main {
         return strings;
     }
 
-    static String generateSentance(int sentanceLenght, String[] words, int probability, int wordLenght) {
+    private static String generateSentence(int SentenceLenght, String[] words, int probability, int wordLenght) {
         StringBuffer stringBuffer = new StringBuffer();
         Random random = new Random();
 
@@ -99,7 +95,7 @@ public class Main {
             stringBuffer.append(firstWord.charAt(i));
         }
 
-        for (int i = 0; i < random.nextInt(sentanceLenght); i++) {
+        for (int i = 0; i < random.nextInt(SentenceLenght); i++) {
             if (random.nextInt(10) == 9) stringBuffer.append(",");
             stringBuffer.append(" ");
             if (random.nextInt(probability) == probability - 1)
@@ -117,47 +113,43 @@ public class Main {
         return stringBuffer.toString();
     }
 
-    static String generateText(int sentanceCount,
-                               int sentanceParagpaphCount,
-                               int sentanceLenght,
-                               String[] words,
-                               int probability,
-                               int wordLenght) {
-        Random random = new Random();
-        StringBuffer stringBuffer = new StringBuffer();
-        int temporarySentanceParagpaphCount = sentanceParagpaphCount;
-        do {
-            stringBuffer.append(generateSentance(sentanceLenght, words, probability, wordLenght));
-            sentanceCount--;
-            temporarySentanceParagpaphCount--;
+    private static String generateText(int SentenceCountMin, int SentenceCountMax, boolean gaussianSentenceCount,
+                                       int SentenceParagpaphCount,
+                                       int SentenceLenght,
+                                       String[] words,
+                                       int probability,
+                                       int wordLenght) {
 
-            if (random.nextInt(20) == sentanceParagpaphCount - 1) {
+        int middleSentenceCount = (SentenceCountMax + SentenceCountMin) / 2;
+        Random random = new Random();
+        int SentenceCount = 0;
+
+        if (gaussianSentenceCount) {
+            SentenceCount = (int) (middleSentenceCount + random.nextGaussian() * middleSentenceCount);
+            if (SentenceCount < middleSentenceCount * 0.5) SentenceCount = SentenceCountMin;
+            if (SentenceCount > middleSentenceCount * 1.5) SentenceCount = SentenceCountMax;
+        } else SentenceCount = (int) (SentenceCountMin + Math.random() * (SentenceCountMax - SentenceCountMin));
+
+        StringBuffer stringBuffer = new StringBuffer();
+        int temporarySentenceParagpaphCount = SentenceParagpaphCount;
+
+        do {
+            stringBuffer.append(generateSentence(SentenceLenght, words, probability, wordLenght));
+            SentenceCount--;
+            temporarySentenceParagpaphCount--;
+
+            if (random.nextInt(20) == SentenceParagpaphCount - 1) {
                 stringBuffer.append(System.getProperty("line.separator"));
-                temporarySentanceParagpaphCount = sentanceParagpaphCount;
+                temporarySentenceParagpaphCount = SentenceParagpaphCount;
             }
 
-            if (temporarySentanceParagpaphCount == 0) {
+            if (temporarySentenceParagpaphCount == 0) {
                 stringBuffer.append(System.getProperty("line.separator"));
-                temporarySentanceParagpaphCount = sentanceParagpaphCount;
+                temporarySentenceParagpaphCount = SentenceParagpaphCount;
             }
         }
-        while (sentanceCount > 0);
+        while (SentenceCount > 0);
 
         return stringBuffer.toString();
-    }
-
-    static String generateText(int sentanceCountMin, int sentanceCountMax,
-                               int sentanceParagpaphCount,
-                               int sentanceLenght, String[] words,
-                               int probability,
-                               int wordLenght) {
-        int middleSentanceCount = (sentanceCountMax + sentanceCountMin) / 2;
-        Random random = new Random();
-
-        int sentanceCount = (int) (middleSentanceCount + random.nextGaussian() * middleSentanceCount);
-        if (sentanceCount < middleSentanceCount * 0.5) sentanceCount = sentanceCountMin;
-        if (sentanceCount > middleSentanceCount * 1.5) sentanceCount = sentanceCountMax;
-
-        return generateText(sentanceCount, sentanceParagpaphCount, sentanceLenght, words, probability, wordLenght);
     }
 }

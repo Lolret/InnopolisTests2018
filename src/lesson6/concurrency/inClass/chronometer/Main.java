@@ -10,7 +10,5 @@ public class Main {
       incThread.start();
         thread3.start();
         thread5.start();
-
     }
-
 }

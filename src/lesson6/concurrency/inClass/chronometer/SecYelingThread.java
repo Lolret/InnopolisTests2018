@@ -15,7 +15,7 @@ public class SecYelingThread implements Runnable {
         while (true) {
             if (chronomer.getTime() % sec == 0
                     && chronomer.getTime() != 0) {
-                System.out.println(sec + " sec!");
+                System.out.println("!" +sec + " sec!");
             }
             synchronized(chronomer) {
                 try {

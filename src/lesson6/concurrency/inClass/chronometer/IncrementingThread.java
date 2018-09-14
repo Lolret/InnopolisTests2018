@@ -18,7 +18,7 @@ public class IncrementingThread implements Runnable {
             }
             synchronized (chronomer) {
                 chronomer.incTime();
-                System.out.println(chronomer.getTime());
+                System.out.println("   "+chronomer.getTime());
                 chronomer.notifyAll();
             }
         }
