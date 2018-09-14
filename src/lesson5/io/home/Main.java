@@ -16,6 +16,7 @@ public class Main {
     static int WORD_ARRAY_LENGHT = 1_000;
     static int PROBABILITY = 2;
 
+
     static boolean GAUSSIAN_SENTENCE_COUNT = true;
     static int WORD_ARRAY_LENGHT_min = 500;
     static int WORD_ARRAY_LENGHT_max = 1_500;
