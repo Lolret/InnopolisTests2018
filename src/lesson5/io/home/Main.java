@@ -9,18 +9,18 @@ import java.util.UUID;
 
 public class Main {
 
-    static int WORD_MAX_LENGHT = 15;
-    static int SENTENCE_MAX_LENGHT = 15;
-    static int SENTENCE_PARAGRAPH_COUNT = 20;
-    static int PROBABILITY = 2;
-    static int WORD_ARRAY_LENGHT = 1_000;
+    private static int WORD_MAX_LENGHT = 15;
+    private static int SENTENCE_MAX_LENGHT = 15;
+    private static int SENTENCE_PARAGRAPH_COUNT = 20;
+    private static int PROBABILITY = 2;
+    private static int WORD_ARRAY_LENGHT = 1_000;
 
-    static boolean GAUSSIAN_SENTENCE_COUNT = true;
-    static int Sentence_COUNT_MIN = 500;
-    static int Sentence_COUNT_MAX = 1_500;
+    private static boolean GAUSSIAN_SENTENCE_COUNT = true;
+    private static int Sentence_COUNT_MIN = 500;
+    private static int Sentence_COUNT_MAX = 1_500;
 
-    static String PATH_TO_RAVE = "d://";
-    static int FILE_COUNT = 3;
+    private static String PATH_TO_RAVE = "d://";
+    private static int FILE_COUNT = 3;
 
     public static void main(String[] args) {
 
@@ -30,13 +30,13 @@ public class Main {
     }
 
     public static void raveGenerator(String path,
-                                     int n, boolean gaussianSentenceCount, String[] words) {
+                                      int n, boolean gaussianSentenceCount, String[] words) {
         for (int i = 0; i < n; i++) {
             generateFile(path, gaussianSentenceCount, words);
         }
     }
 
-    public static void generateFile(String path, boolean gaussianSentenceCount, String[] words) {
+    private static void generateFile(String path, boolean gaussianSentenceCount, String[] words) {
 
         String filePathName = path + "raveFile_" + UUID.randomUUID().toString() + ".txt";
         Path p = Paths.get(filePathName);
@@ -50,7 +50,7 @@ public class Main {
         populateFile(filePathName, gaussianSentenceCount, words);
     }
 
-    static void populateFile(String filePathName, boolean gaussianSentenceCount, String[] words) {
+    private static void populateFile(String filePathName, boolean gaussianSentenceCount, String[] words) {
 
         try {
             Files.write(Paths.get(filePathName),
@@ -122,7 +122,7 @@ public class Main {
 
         int middleSentenceCount = (SentenceCountMax + SentenceCountMin) / 2;
         Random random = new Random();
-        int SentenceCount = 0;
+        int SentenceCount;
 
         if (gaussianSentenceCount) {
             SentenceCount = (int) (middleSentenceCount + random.nextGaussian() * middleSentenceCount);
