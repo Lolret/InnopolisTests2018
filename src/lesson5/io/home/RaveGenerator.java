@@ -53,11 +53,11 @@ public class RaveGenerator {
     }
 
     private static String generateWord(int wordLenght) {
-        Random r = new Random();
+        Random random = new Random();
         StringBuffer stringBuffer = new StringBuffer();
 
-        for (int i = 0; i < r.nextInt(wordLenght) + 1; i++) {
-            stringBuffer.append((char) (r.nextInt(26) + 'a'));
+        for (int i = 0; i < random.nextInt(wordLenght +1); i++) {
+            stringBuffer.append((char) (random.nextInt(26) + 'a'));
         }
         return stringBuffer.toString();
     }
