@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -17,9 +18,8 @@ public class WordsFinder {
         else executor = Executors.newFixedThreadPool(sources.length);
 
         List<Callable<String>> tasks = new ArrayList<>();
-        for (String source : sources) {
-            tasks.add(new SingleFileTextAnalyzer(source, words));
-        }
+
+        Arrays.stream(sources).forEach(x -> tasks.add(new SingleFileTextAnalyzer(x, words)));
 
         for (Future<String> f : executor.invokeAll(tasks)) {
             Files.write(Paths.get(res), f.get().getBytes());
