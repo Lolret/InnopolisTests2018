@@ -9,13 +9,12 @@ import java.util.UUID;
 
 public class RaveGenerator {
 
-    private static int SENTENCE_MAX_LENGHT = 15;
-    private static int SENTENCE_PARAGRAPH_COUNT = 20;
-    private static int PROBABILITY = 50;
+    private static final int SENTENCE_MAX_LENGHT = 15;
+    private static final int SENTENCE_PARAGRAPH_COUNT = 20;
+    private static final int PROBABILITY = 1000;
 
-    private static int Sentence_COUNT_MIN = 500;
-    private static int Sentence_COUNT_MAX = 1_500;
-
+    private static final int Sentence_COUNT_MIN = 1_000_000;
+    private static final int Sentence_COUNT_MAX = 1_000_000;
 
 
     public static void getFiles(String path,
