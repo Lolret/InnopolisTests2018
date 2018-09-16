@@ -26,10 +26,9 @@ public class SingleFileTextAnalyzer implements Callable<String> {
             scanner.useDelimiter(pattern);
             while (scanner.hasNext()) {
                 String sentence = scanner.next();
-//                scanner.findInLine(pattern);
                 for (String word : words) {
                     if (checkWordInSentence(sentence, word)) {
-                        sb.append(sentence.trim() + ".\r\n");
+                        sb.append(sentence.trim()).append(scanner.findInLine(pattern)).append("\r\n");
                     }
                 }
             }

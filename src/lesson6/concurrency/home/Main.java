@@ -11,7 +11,7 @@ public class Main {
         WordsFinder wf = new WordsFinder();
         try {
 
-            wf.getOccurrences(new String[]{"d://raveFile.txt"}, new String[]{"i", "cat"}, "d://res.txt");
+            wf.getOccurrences(new String[]{"d://raveFile.txt"}, new String[]{"i", "b"}, "d://res.txt");
 
         } catch (InterruptedException | ExecutionException | IOException e) {
             e.printStackTrace();
