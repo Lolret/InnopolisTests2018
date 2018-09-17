@@ -5,23 +5,44 @@ import java.util.Arrays;
 import java.util.List;
 
 public class XMLUtil {
+    private Object obj;
+    int label = 0;
 
-    public String createXML(String filePath, Object object) throws IllegalAccessException {
+    public String createXML(Object object) throws IllegalAccessException {
+
+        this.obj = object;
 
         String className = object.getClass().getSimpleName();
         List<Field> fields = Arrays.asList(object.getClass().getFields());
 
+
+        label++;
+
         StringBuilder sb = new StringBuilder();
+
         sb.append("<" + className + ">\n");
+
         for (Field f : fields) {
-            sb.append("\t<" + f.getName() + ">\n");
-            sb.append("\t\t" + f.get(object) + "\n");
-            sb.append("\t</" + f.getName() + ">\n");
+            sb.append(new String(new char[label]).replace("\0", "\t"));
+            sb.append("<" + f.getName() + ">\n");
+            sb.append(new String(new char[label]).replace("\0", "\t"));
+
+            sb.append(fieldMaker(f) + "\n");
+            sb.append(new String(new char[label]).replace("\0", "\t"));
+
+            sb.append("</" + f.getName() + ">\n");
 
         }
         sb.append("</" + className + ">\n");
 
         return sb.toString();
 
+    }
+
+
+    private String fieldMaker(Field f) throws IllegalAccessException {
+        if (!(f.getType().isPrimitive() || f.getType().getSimpleName().equals("String"))) {
+            return createXML(f.get(obj));
+        } else return "\t" + f.get(obj).toString();
     }
 }

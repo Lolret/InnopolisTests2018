@@ -3,6 +3,9 @@ package lesson7.reflection.inClass.proxy;
 public class JavaTrainer implements  Trainer {
 
     public String name;
+    public int age = 25;
+
+    Thread thread = new Thread();
 
     public JavaTrainer() {
     }

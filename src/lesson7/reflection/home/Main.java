@@ -6,7 +6,7 @@ public class Main
 {
     public static void main(String[] args) throws IllegalAccessException {
         XMLUtil xmlUtil = new XMLUtil();
-        String XML = xmlUtil.createXML("a", new JavaTrainer("Misha"));
+        String XML = xmlUtil.createXML(new Iam());
 
         System.out.println(XML);
 
