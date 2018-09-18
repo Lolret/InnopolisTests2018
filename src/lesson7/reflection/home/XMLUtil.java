@@ -1,48 +1,36 @@
 package lesson7.reflection.home;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
 public class XMLUtil {
-    private Object obj;
-    int label = 0;
 
-    public String createXML(Object object) throws IllegalAccessException {
+    private StringBuilder sb;
 
-        this.obj = object;
-
+    public String createXMLString(Object object, String pathFile) throws IllegalAccessException, IOException {
+        sb = new StringBuilder();
         String className = object.getClass().getSimpleName();
-        List<Field> fields = Arrays.asList(object.getClass().getFields());
 
+        sb.append("<" + className + ">");
+        fieldsMaker(object);
+        sb.append("</" + className + ">");
 
-        label++;
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("<" + className + ">\n");
-
-        for (Field f : fields) {
-            sb.append(new String(new char[label]).replace("\0", "\t"));
-            sb.append("<" + f.getName() + ">\n");
-            sb.append(new String(new char[label]).replace("\0", "\t"));
-
-            sb.append(fieldMaker(f) + "\n");
-            sb.append(new String(new char[label]).replace("\0", "\t"));
-
-            sb.append("</" + f.getName() + ">\n");
-
-        }
-        sb.append("</" + className + ">\n");
-
+        Files.write(Paths.get(pathFile), sb.toString().getBytes());
         return sb.toString();
-
     }
 
-
-    private String fieldMaker(Field f) throws IllegalAccessException {
-        if (!(f.getType().isPrimitive() || f.getType().getSimpleName().equals("String"))) {
-            return createXML(f.get(obj));
-        } else return "\t" + f.get(obj).toString();
+    private void fieldsMaker(Object object) throws IllegalAccessException {
+        for (Field f : Arrays.asList(object.getClass().getFields())) {
+            sb.append("<" + f.getName() + ">");
+            if (!(f.getType().isPrimitive() || f.getType().getSimpleName().equals("String"))) {
+                fieldsMaker(f.get(object));
+            } else sb.append(f.get(object));
+            sb.append("</" + f.getName() + ">");
+        }
     }
 }

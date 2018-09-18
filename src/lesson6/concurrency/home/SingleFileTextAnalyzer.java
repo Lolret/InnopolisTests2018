@@ -10,12 +10,10 @@ public class SingleFileTextAnalyzer implements Callable<String> {
 
     private String source;
     private String[] words;
-    private String res;
 
     public SingleFileTextAnalyzer(String source, String[] words) {
         this.source = source;
         this.words = words;
-
     }
 
     @Override

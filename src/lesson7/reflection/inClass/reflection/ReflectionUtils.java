@@ -35,7 +35,6 @@ public class ReflectionUtils {
             System.out.println("name = " + field.getName());
             System.out.println("type = " + field.getType());
             System.out.println("modifier = " + field.getModifiers());
-
         }
     }
 
