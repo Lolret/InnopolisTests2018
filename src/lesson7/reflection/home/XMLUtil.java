@@ -12,7 +12,7 @@ public class XMLUtil {
 
     private StringBuilder sb;
 
-    public String createXMLString(Object object, String pathFile) throws IllegalAccessException, IOException {
+    public String createXMLFile(Object object, String pathFile) throws IllegalAccessException, IOException {
         sb = new StringBuilder();
         String className = object.getClass().getSimpleName();
 

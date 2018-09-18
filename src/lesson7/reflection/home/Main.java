@@ -16,18 +16,16 @@ public class Main {
 
         //My XML serializer implementation;
         XMLUtil xmlUtil = new XMLUtil();
-        String XML = xmlUtil.createXMLString(new Iam(), myPathFile);
+        String XML = xmlUtil.createXMLFile(new Iam(), myPathFile);
 
         //Some outer XML serializer;
         XmlMapper mapper = new XmlMapper();
         String xml = mapper.writeValueAsString(new Iam());
 
         mapper.writeValue(new File(customPathFile), me);
-//        File file = new File(customPathFile);
 
         System.out.println(xml);
         System.out.println(XML);
-
 
         Iam value = mapper.readValue(new String(Files.readAllBytes(Paths.get(myPathFile))), Iam.class);
 
