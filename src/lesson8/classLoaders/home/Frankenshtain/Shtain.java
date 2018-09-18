@@ -1,4 +1,4 @@
-package lesson8.classLoaders.inClass.Frankenshtain;
+package lesson8.classLoaders.home.Frankenshtain;
 
 public class Shtain {
 

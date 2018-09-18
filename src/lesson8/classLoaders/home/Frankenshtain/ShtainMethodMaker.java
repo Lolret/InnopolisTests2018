@@ -1,4 +1,4 @@
-package lesson8.classLoaders.inClass.Frankenshtain;
+package lesson8.classLoaders.home.Frankenshtain;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -1,5 +1,7 @@
 package lesson7.reflection.home;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
@@ -12,7 +14,7 @@ public class XMLUtil {
 
     private StringBuilder sb;
 
-    public String createXMLFile(Object object, String pathFile) throws IllegalAccessException, IOException {
+    public void serialize(Object object, String file) throws IllegalAccessException, IOException {
         sb = new StringBuilder();
         String className = object.getClass().getSimpleName();
 
@@ -20,8 +22,7 @@ public class XMLUtil {
         fieldsMaker(object);
         sb.append("</" + className + ">");
 
-        Files.write(Paths.get(pathFile), sb.toString().getBytes());
-        return sb.toString();
+        Files.write(Paths.get(file), sb.toString().getBytes());
     }
 
     private void fieldsMaker(Object object) throws IllegalAccessException {
@@ -32,5 +33,18 @@ public class XMLUtil {
             } else sb.append(f.get(object));
             sb.append("</" + f.getName() + ">");
         }
+    }
+
+    public Object deSerialize(String file) {
+        XmlMapper mapper = new XmlMapper();
+        Object value = null;
+        try {
+            value = mapper.readValue(new String(Files.readAllBytes(Paths.get(file))), Object.class);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return value;
+
     }
 }

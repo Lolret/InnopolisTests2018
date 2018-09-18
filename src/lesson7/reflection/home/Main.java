@@ -16,7 +16,7 @@ public class Main {
 
         //My XML serializer implementation;
         XMLUtil xmlUtil = new XMLUtil();
-        String XML = xmlUtil.createXMLFile(new Iam(), myPathFile);
+        xmlUtil.serialize(new Iam(), myPathFile);
 
         //Some outer XML serializer;
         XmlMapper mapper = new XmlMapper();
@@ -25,7 +25,6 @@ public class Main {
         mapper.writeValue(new File(customPathFile), me);
 
         System.out.println(xml);
-        System.out.println(XML);
 
         Iam value = mapper.readValue(new String(Files.readAllBytes(Paths.get(myPathFile))), Iam.class);
 
