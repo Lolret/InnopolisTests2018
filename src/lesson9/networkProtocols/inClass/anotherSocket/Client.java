@@ -18,7 +18,7 @@ public class Client {
                      new OutputStreamWriter(socket.getOutputStream()))) {
             Scanner scanner = new Scanner(System.in);
             String message;
-            while ((message = scanner.nextLine()) != "") {
+            while (!(message = scanner.nextLine()).equals("!")) {
                 bufferedWriter.write(message);
                 bufferedWriter.newLine();
                 bufferedWriter.flush();
