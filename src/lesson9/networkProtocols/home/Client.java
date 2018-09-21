@@ -8,7 +8,7 @@ public class Client {
 
     public static void main(String[] args) {
 
-        try (Socket socket = new Socket("127.0.0.1", 4999);
+        try (Socket socket = new Socket("127.0.0.1", Server.SERVER_PORT);
              BufferedWriter writer = new BufferedWriter(
                      new OutputStreamWriter(socket.getOutputStream()));
              BufferedReader reader = new BufferedReader(
@@ -19,7 +19,6 @@ public class Client {
             while ((message = reader.readLine()) != null && msgSender.isAlive()) {
                 System.out.println(message);
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();

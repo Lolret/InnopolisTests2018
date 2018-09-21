@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         String pathToRave = "d://";
-        int fileCount = 1;
+        int fileCount = 3;
         boolean gaussianSentenceCount = false;
 
         int wordArrayLenght = 1_000;

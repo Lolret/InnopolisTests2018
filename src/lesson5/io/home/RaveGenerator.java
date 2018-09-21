@@ -13,9 +13,9 @@ public class RaveGenerator {
     private static final int SENTENCE_PARAGRAPH_COUNT = 20;
     private static final int PROBABILITY = 1000;
 
-    private static final int Sentence_COUNT_MIN = 10_000;
+    private static final int Sentence_COUNT_MIN = 10_000_000;
     /*3_810_685;*/
-    private static final int Sentence_COUNT_MAX = 10_000;
+    private static final int Sentence_COUNT_MAX = 10_000_000;
     /*3_810_685;*/
 
 

@@ -7,10 +7,6 @@ public class Main {
 
         String pathFile = System. getProperty("user.dir");
 
-        File root = new File("/java");
-
         ShtainClassMaker.doAll(pathFile);
-
-//        System.out.println(root.getPath());
     }
 }

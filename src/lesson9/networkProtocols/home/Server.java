@@ -19,7 +19,6 @@ public class Server {
 
         service.submit(new ServerSocketAvaiting(sockets, service));
         service.submit(new MsgsSender(sockets, service));
-        service.submit(new MsgsSender(sockets, service));
 
     }
 
@@ -37,11 +36,12 @@ public class Server {
         @Override
         public void run() {
             try (ServerSocket serverSocket = new ServerSocket(SERVER_PORT)) {
-                while (service.isShutdown() || service.isTerminated()) {
-
+                while (true) {
+                    System.out.println("waiting connection on port" +serverSocket.toString());
                     Socket socket = serverSocket.accept();
 
                     sockets.add(socket);
+                    System.out.println("connected to server");
                     socket.getOutputStream().write("Connected to server".getBytes());
                 }
             } catch (IOException e) {
