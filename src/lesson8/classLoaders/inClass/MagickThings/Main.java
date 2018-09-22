@@ -7,7 +7,7 @@ public class Main    {
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
 
 //
-//        System.out.println(Magick.class.getName());
+//        System.serverSocketWriter.println(Magick.class.getName());
 
 
         ClassLoader parentClassLoader = Magick.class.getClassLoader();

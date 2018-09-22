@@ -19,6 +19,6 @@ public class Main {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//        list.forEach(System.out::println);
+//        list.forEach(System.serverSocketWriter::println);
     }
 }

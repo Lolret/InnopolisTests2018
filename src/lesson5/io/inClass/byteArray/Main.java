@@ -11,7 +11,7 @@ public class Main {
 //    try (BufferedInputStream bufferedInputStream = new BufferedInputStream(byteArrayInputStream)) {
 //        int c = 0;
 //        while ((c = bufferedInputStream.read()) != -1) {
-//            System.out.print((char) c);
+//            System.serverSocketWriter.print((char) c);
 //        }
 //    } catch
 }

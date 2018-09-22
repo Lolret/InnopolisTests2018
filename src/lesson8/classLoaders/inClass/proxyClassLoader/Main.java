@@ -22,12 +22,12 @@ public class Main {
 
 
         /*Human human = new EuropeanHuman();
-        System.out.println(human.say());
+        System.serverSocketWriter.println(human.say());
         human.eat("banana", 5);
         ClassLoader parentLoader = EuropeanHuman.class.getClassLoader();
         HumanLoader humanLoader = new HumanLoader(parentLoader);
         Class humanClass = humanLoader.loadClass("ru.innopolis.stx13._7_classLoader.magic.proxy.EuropeanHuman");
-        System.out.println(humanClass.getMethod("say").invoke(humanClass.newInstance(), null));
+        System.serverSocketWriter.println(humanClass.getMethod("say").invoke(humanClass.newInstance(), null));
         */
     }
 }
