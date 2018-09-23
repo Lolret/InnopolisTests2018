@@ -1,10 +1,8 @@
 package lesson9.networkProtocols.home.client;
 
 import lesson9.networkProtocols.home.server.Server;
-
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class Client {
 

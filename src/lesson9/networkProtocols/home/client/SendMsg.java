@@ -7,17 +7,16 @@ import java.util.Scanner;
 
 class SendMsg implements Runnable {
 
-    BufferedWriter writer;
-    Socket socket;
+    private BufferedWriter writer;
+    private Socket socket;
 
-    public SendMsg(BufferedWriter writer, Socket socket) {
+    SendMsg(BufferedWriter writer, Socket socket) {
         this.writer = writer;
         this.socket = socket;
     }
 
     @Override
     public void run() {
-
         Scanner scanner = new Scanner(System.in);
         String message;
         while (!(message = scanner.nextLine()).equals("")) {
@@ -38,9 +37,7 @@ class SendMsg implements Runnable {
     private void stopClient() {
         try {
             socket.close();
-        } catch (IOException e) {
-
+        } catch (IOException ignored) {
         }
-
     }
 }

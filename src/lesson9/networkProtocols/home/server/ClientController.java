@@ -10,7 +10,7 @@ public class ClientController implements Runnable {
     private BufferedReader serverSocketReader;
     private BufferedWriter serverSocketWriter;
 
-    public ClientController(Socket socket) {
+    ClientController(Socket socket) {
         this.socket = socket;
     }
 
@@ -20,17 +20,9 @@ public class ClientController implements Runnable {
             serverSocketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             serverSocketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             greetsToClient();
-            readMsg();
+            readAndResendMsg();
         } catch (IOException e1) {
             e1.printStackTrace();
-        }
-    }
-
-    private void readMsg() throws IOException {
-        String message;
-        while ((message = serverSocketReader.readLine()) != null || !Server.service.isShutdown()) {
-            System.out.println(message = (clientNickname + ": " + message));
-            sendAll(message);
         }
     }
 
@@ -41,7 +33,15 @@ public class ClientController implements Runnable {
         serverSocketWriter.flush();
     }
 
-    void sendAll(String message) throws IOException {
+    private void readAndResendMsg() throws IOException {
+        String message;
+        while ((message = serverSocketReader.readLine()) != null || !Server.service.isShutdown()) {
+            System.out.println(message = (clientNickname + ": " + message));
+            sendAll(message);
+        }
+    }
+
+    private void sendAll(String message) throws IOException {
         for (ClientController client : SocketsManager.getClients()) {
             client.serverSocketWriter.write(message);
             client.serverSocketWriter.newLine();
