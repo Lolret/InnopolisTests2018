@@ -8,10 +8,12 @@ import java.util.concurrent.*;
 
 public class WordsFinder {
 
+    private static List<Callable<Set<String>>> tasks;
+
     public static void getOccurrences(String[] sources, String[] words, String res) throws InterruptedException {
 
         ExecutorService executor;
-        List<Callable<Set<String>>> tasks = new ArrayList<>();
+        tasks = new ArrayList<>();
 
         executor = ((sources.length) > 10 ?
                 Executors.newFixedThreadPool(4) :
